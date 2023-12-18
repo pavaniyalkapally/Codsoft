@@ -1,0 +1,54 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class GuessingGame {
+
+    private static final int MAX_RANGE = 100; 
+    private static final int MAX_TRIES = 5; 
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        boolean playing = true;
+        int totalScore = 0;
+
+        while (playing) {
+            int targetNumber = random.nextInt(MAX_RANGE) + 1; 
+            int triesLeft = MAX_TRIES;
+
+            System.out.println("Guess a number between 1 and " + MAX_RANGE + ". You have " + triesLeft + " attempts.");
+
+            while (triesLeft > 0) {
+                System.out.print("Enter your guess: ");
+                int guess = scanner.nextInt();
+
+                if (guess == targetNumber) {
+                    System.out.println("Congratulations! You guessed the number in " + (MAX_TRIES - triesLeft) + " tries.");
+                    totalScore += MAX_TRIES - triesLeft;
+                    break;
+                } else if (guess < targetNumber) {
+                    System.out.println("Your guess is too low. Try again.");
+                } else {
+                    System.out.println("Your guess is too high. Try again.");
+                }
+
+                triesLeft--;
+            }
+
+            if (triesLeft == 0) {
+                System.out.println("Sorry, you ran out of tries! The number was " + targetNumber + ".");
+            }
+
+            System.out.println("Your current score is: " + totalScore);
+
+            System.out.println("Play again? (y/n)");
+            String playAgain = scanner.nextLine().toLowerCase();
+
+            playing = playAgain.equals("y");
+        }
+
+        scanner.close();
+        System.out.println("Thanks for playing! Your final score is: " + totalScore);
+    }
+}
